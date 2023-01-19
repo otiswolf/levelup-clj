@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% block content %}
+<div class="content">
+  <div class="columns">
+    <div class="column">
+      <h3>Skills</h3>
+      <ul class="skills">
+        {% for skill in skills %}
+        <li>
+          <p>Skill: {{skill.skill_name}}</p>
+          <p>Level: {{skill.skill_level}}</p>
+          <form action="/skill" method="get">
+            <input type="hidden" name="id" value="{{skill.id}}" />
+            <input type="submit" value="Edit" />
+          </form>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="columns">
+    <div class="column">
+      <form action="/" method="post">
+        {% csrf-field %}
+        <p>
+          Add a New Skill:
+          <input class="input" type="text" name="skill_name" value="{{name}}" />
+        </p>
+        {% if errors.skill_name %}
+        <div class="notification is-danger">{{errors.skill_name|join}}</div>
+        {% endif %}
+        <input type="submit" value="comment" class="button is-primary" />
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

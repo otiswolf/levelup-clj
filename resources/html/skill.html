@@ -1,0 +1,30 @@
+{% extends "base.html" %} {% block content %}
+<div class="content">
+  <div class="columns">
+    <div class="column">
+      <h3>Skill Info</h3>
+      <ul class="skill">
+        <li>
+          <p>Skill Name: {{skill.skill_name}}</p>
+        </li>
+        <li>
+          <p>Skill Level: {{skill.skill_level}}</p>
+        </li>
+        <li>
+          <p>Skill XP: {{skill.total_xp}}</p>
+        </li>
+        <li>
+          <p>
+            Created: <time>{{skill.timestamp|date:"MM-dd-yyyy HH:mm"}}</time>
+          </p>
+        </li>
+        <form action="/skill/delete" method="post">
+          {% csrf-field %}
+          <input type="hidden" name="id" value="{{skill.id}}" />
+          <input type="submit" value="Delete Skill" />
+        </form>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}
