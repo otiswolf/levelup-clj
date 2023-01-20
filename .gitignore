@@ -19,4 +19,5 @@ profiles.clj
 /log
 /.vscode
 /.clj-kondo
-
+levelup_clj_dev.db.mv.db
+levelup_clj_dev.db.trace.db

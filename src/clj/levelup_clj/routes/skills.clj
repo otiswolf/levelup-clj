@@ -11,6 +11,20 @@
 (defn get-skill [id] 
    (db/get-skill {:id id}))
 
+(defn update-skill! [{:keys [path-params params]}]
+  (let [skill-key (get path-params :skill-key)
+        value (get params :value)
+        id (get params :id)]
+    (case skill-key
+      "total-xp" (db/update-skill-xp! {:id id :total_xp value}))
+    (response/found "/")))
+
+(defn add-xp! [{:keys [params]}]
+  (let [id (get params :id)
+        xp (get params :xp)]
+    (db/update-skill-xp! {:id id :total_xp xp})
+    (response/found "/")))
+
 (defn delete-skill! [{:keys [params]}]
   (let [id (get params :id)]
     (db/delete-skill! {:id id})
@@ -28,4 +42,5 @@
    {:middleware      [middleware/wrap-csrf
                       middleware/wrap-formats]}
    ["/skill"         {:get skill-page}]
-   ["/skill/delete"  {:post delete-skill!}]])
+   ["/skill/delete"  {:post delete-skill!}]
+   ["/skill/update/:skill-key" {:post update-skill!}]])
