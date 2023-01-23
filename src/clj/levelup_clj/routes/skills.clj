@@ -11,13 +11,13 @@
 (defn get-skill [id] 
    (db/get-skill {:id id}))
 
-(defn update-skill! [{:keys [path-params params]}]
-  (let [skill-key (get path-params :skill-key)
-        value (get params :value)
+(defn edit-skill! [{:keys [params]}]
+  (let [skill-name (get params :skill-name)
+        skill-level (get params :skill-level)
+        total-xp (get params :total-xp)
         id (get params :id)]
-    (case skill-key
-      "total-xp" (db/update-skill-xp! {:id id :total_xp value}))
-    (response/found "/")))
+    (db/update-skill-xp! {:id id :skill_name skill-name :skill_level skill-level :total_xp total-xp})
+    (response/found (str "/skill?id=" id))))
 
 (defn add-xp! [{:keys [params]}]
   (let [id (get params :id)
@@ -37,10 +37,18 @@
      "skill.html"
      {:skill (get-skill id)})))
 
+(defn edit-skill-page [{:keys [query-params] :as request}]
+  (let [id (get query-params "id")]
+    (layout/render
+     request
+     "edit-skill.html"
+     {:skill (get-skill id)})))
+
 (defn skills-routes []
   [""
    {:middleware      [middleware/wrap-csrf
                       middleware/wrap-formats]}
-   ["/skill"         {:get skill-page}]
+   ["/skill"         {:get  skill-page}]
    ["/skill/delete"  {:post delete-skill!}]
-   ["/skill/update/:skill-key" {:post update-skill!}]])
+   ["/skill/edit"    {:get  edit-skill-page
+                      :post edit-skill!}]])

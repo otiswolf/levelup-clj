@@ -12,22 +12,16 @@
         </li>
         <li>
           <p>Skill XP: {{skill.total_xp}}</p>
-          <form action="/skill/update/total-xp" method="post">
-            {% csrf-field %}
-            <input type="hidden" name="value" value="10" />
-            <input type="hidden" name="id" value="{{skill.id}}" />
-            <input type="submit" value="Foo" />
-          </form>
         </li>
         <li>
           <p>
             Created: <time>{{skill.timestamp|date:"MM-dd-yyyy HH:mm"}}</time>
           </p>
         </li>
-        <form action="/skill/delete" method="post">
+        <form action="/skill/edit" method="get">
           {% csrf-field %}
           <input type="hidden" name="id" value="{{skill.id}}" />
-          <input type="submit" value="Delete Skill" />
+          <input type="submit" value="Edit Skill" />
         </form>
       </ul>
     </div>

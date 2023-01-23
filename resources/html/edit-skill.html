@@ -1,0 +1,44 @@
+{% extends "base.html" %} {% block content %}
+<div class="content">
+  <div class="columns">
+    <div class="column">
+      <h3>Edit Skill</h3>
+      <form action="/skill/edit" method="post">
+        {% csrf-field %}
+        <input type="hidden" name="id" value="{{skill.id}}" />
+        <label for="skill-name">Skill Name: </label>
+        <input
+          type="text"
+          name="skill-name"
+          id="skill-name"
+          value="{{skill.skill_name}}"
+        />
+        <br />
+        <label for="skill-level">Skill Level: </label>
+        <input
+          type="number"
+          name="skill-level"
+          id="skill-level"
+          value="{{skill.skill_level}}"
+        />
+        <br />
+        <label for="total-xp">Total XP: </label>
+        <input
+          type="number"
+          name="total-xp"
+          id="total-xp"
+          value="{{skill.total_xp}}"
+        />
+        <br />
+        <input type="submit" value="Submit" />
+      </form>
+      <br />
+      <form action="/skill/delete" method="post">
+        {% csrf-field %}
+        <input type="hidden" name="id" value="{{skill.id}}" />
+        <input type="submit" value="Delete Skill" />
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -22,7 +22,9 @@ WHERE id = :id
 -- :name update-skill-xp! :! :n
 -- :doc updates total_xp for a given skill
 UPDATE skills
-SET total_xp = :total_xp
+SET skill_name = :skill_name,
+    skill_level = :skill_level,
+    total_xp = :total_xp
 WHERE id = :id
 
 -- DELETE
