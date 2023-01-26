@@ -13,6 +13,9 @@
           id="skill-name"
           value="{{skill.skill_name}}"
         />
+        {% if errors.skill-name %}
+        <div class="notification is-danger">{{errors.skill-name|join}}</div>
+        {% endif %}
         <br />
         <label for="skill-level">Skill Level: </label>
         <input

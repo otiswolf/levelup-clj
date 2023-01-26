@@ -2,8 +2,8 @@
   (:require
    [levelup-clj.layout :as layout]
    [levelup-clj.db.core :as db]
-   [clojure.java.io :as io]
-   [clojure.string :as string]
+   [levelup-clj.util.exception :as ex]
+   [clojure.java.io :as io] 
    [levelup-clj.middleware :as middleware]
    [ring.util.response]
    [ring.util.http-response :as response]
@@ -13,9 +13,6 @@
   [[:skill_name
     st/required
     st/string]])
-
-(defn unique-key-exception? [e]
-  (string/starts-with? e "Unique index or primary key violation"))
 
 (defn validate-skill [params]
   (first (st/validate params skill-schema)))
@@ -31,7 +28,7 @@
                       :total_xp 0}))
       (response/found "/")
       (catch Exception e (cond
-                           (unique-key-exception? (.getMessage e)) 
+                           (ex/unique-key-exception? (.getMessage e)) 
                            (-> (response/found "/") 
                                (assoc :flash (assoc params :errors {:skill_name "Skill name must be unique."})))
                            :else                     

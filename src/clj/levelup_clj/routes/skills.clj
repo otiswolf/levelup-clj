@@ -2,6 +2,7 @@
   (:require
    [levelup-clj.layout :as layout]
    [levelup-clj.db.core :as db]
+   [levelup-clj.util.exception :as ex]
    [clojure.java.io :as io]
    [levelup-clj.middleware :as middleware]
    [ring.util.response]
@@ -16,14 +17,16 @@
         skill-level (get params :skill-level)
         total-xp (get params :total-xp)
         id (get params :id)]
-    (db/update-skill-xp! {:id id :skill_name skill-name :skill_level skill-level :total_xp total-xp})
-    (response/found (str "/skill?id=" id))))
-
-(defn add-xp! [{:keys [params]}]
-  (let [id (get params :id)
-        xp (get params :xp)]
-    (db/update-skill-xp! {:id id :total_xp xp})
-    (response/found "/")))
+    (try
+      (db/update-skill! {:id id :skill_name skill-name :skill_level skill-level :total_xp total-xp})
+      (response/found (str "/skill?id=" id))
+      (catch Exception e (cond
+                           (ex/unique-key-exception? (.getMessage e)) 
+                           (-> (response/found (str "/skill/edit?id=" id)) 
+                               (assoc :flash (assoc params :errors {:skill-name "Skill name must be unique."})))
+                           :else                     
+                           (-> (response/found (str "/skill/edit?id=" id))
+                               (assoc :flash (assoc params :errors {:general (.getMessage e)}))))))))
 
 (defn delete-skill! [{:keys [params]}]
   (let [id (get params :id)]
@@ -37,12 +40,13 @@
      "skill.html"
      {:skill (get-skill id)})))
 
-(defn edit-skill-page [{:keys [query-params] :as request}]
+(defn edit-skill-page [{:keys [query-params flash] :as request}]
   (let [id (get query-params "id")]
     (layout/render
      request
      "edit-skill.html"
-     {:skill (get-skill id)})))
+     {:skill (get-skill id)
+      :errors (:errors flash)})))
 
 (defn skills-routes []
   [""

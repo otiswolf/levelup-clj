@@ -19,8 +19,8 @@ WHERE id = :id
 
 -- UPDATE
 
--- :name update-skill-xp! :! :n
--- :doc updates total_xp for a given skill
+-- :name update-skill! :! :n
+-- :doc updates a given skill
 UPDATE skills
 SET skill_name = :skill_name,
     skill_level = :skill_level,
