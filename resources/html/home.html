@@ -23,10 +23,10 @@
         {% csrf-field %}
         <p>
           Add a New Skill:
-          <input class="input" type="text" name="skill_name" value="{{name}}" />
+          <input class="input" type="text" name="skill-name" value="{{name}}" />
         </p>
-        {% if errors.skill_name %}
-        <div class="notification is-danger">{{errors.skill_name|join}}</div>
+        {% if errors.skill-name %}
+        <div class="notification is-danger">{{errors.skill-name|join}}</div>
         {% endif %}
         <input type="submit" value="comment" class="button is-primary" />
       </form>

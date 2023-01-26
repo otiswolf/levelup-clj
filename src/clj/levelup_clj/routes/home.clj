@@ -10,7 +10,7 @@
    [struct.core :as st]))
 
 (def skill-schema
-  [[:skill_name
+  [[:skill-name
     st/required
     st/string]])
 
@@ -24,16 +24,16 @@
     (try
       (db/create-skill!
        (merge params {:timestamp (java.util.Date.)
-                      :skill_level 0
-                      :total_xp 0}))
+                      :skill-level 0
+                      :total-xp 0}))
       (response/found "/")
       (catch Exception e (cond
                            (ex/unique-key-exception? (.getMessage e)) 
                            (-> (response/found "/") 
-                               (assoc :flash (assoc params :errors {:skill_name "Skill name must be unique."})))
+                               (assoc :flash (assoc params :errors {:skill-name "Skill name must be unique."})))
                            :else                     
                            (-> (response/found "/")
-                               (assoc :flash (assoc params :errors {:skill_name (.getMessage e)}))))))))
+                               (assoc :flash (assoc params :errors {:skill-name (.getMessage e)}))))))))
 
 (defn home-page [{:keys [flash] :as request}]
   (layout/render 

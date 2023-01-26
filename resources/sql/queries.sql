@@ -4,7 +4,7 @@
 -- :doc creates a new skill record
 INSERT INTO skills
 (skill_name, skill_level, total_xp, timestamp)
-VALUES (:skill_name, :skill_level, :total_xp, :timestamp)
+VALUES (:skill-name, :skill-level, :total-xp, :timestamp)
 
 -- READ
 
@@ -22,9 +22,9 @@ WHERE id = :id
 -- :name update-skill! :! :n
 -- :doc updates a given skill
 UPDATE skills
-SET skill_name = :skill_name,
-    skill_level = :skill_level,
-    total_xp = :total_xp
+SET skill_name = :skill-name,
+    skill_level = :skill-level,
+    total_xp = :total-xp
 WHERE id = :id
 
 -- DELETE

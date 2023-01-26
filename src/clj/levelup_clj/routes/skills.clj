@@ -18,7 +18,7 @@
         total-xp (get params :total-xp)
         id (get params :id)]
     (try
-      (db/update-skill! {:id id :skill_name skill-name :skill_level skill-level :total_xp total-xp})
+      (db/update-skill! {:id id :skill-name skill-name :skill-level skill-level :total-xp total-xp})
       (response/found (str "/skill?id=" id))
       (catch Exception e (cond
                            (ex/unique-key-exception? (.getMessage e)) 
