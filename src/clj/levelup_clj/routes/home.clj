@@ -3,8 +3,8 @@
    [levelup-clj.layout :as layout]
    [levelup-clj.db.core :as db]
    [levelup-clj.util.exception :as ex]
-   [clojure.java.io :as io] 
    [levelup-clj.middleware :as middleware]
+   [camel-snake-kebab.core :as csk]
    [ring.util.response]
    [ring.util.http-response :as response]
    [struct.core :as st]))
@@ -39,7 +39,8 @@
   (layout/render 
    request 
    "home.html" 
-   (merge {:skills (db/get-skills)}
+   (merge {:skills (->> (db/get-skills)
+                       (map #(update-keys % csk/->kebab-case)))}
           (select-keys flash [:name :skill :errors]))))
 
 (defn about-page [request]

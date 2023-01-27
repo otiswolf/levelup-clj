@@ -3,7 +3,8 @@
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
 
-  :dependencies [[clojure.java-time "1.1.0"]
+  :dependencies [[camel-snake-kebab "0.4.3"]
+                 [clojure.java-time "1.1.0"]
                  [com.h2database/h2 "1.4.200"]
                  [conman "0.9.5"]
                  [cprop "0.1.19"]

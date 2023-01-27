@@ -11,7 +11,7 @@
           type="text"
           name="skill-name"
           id="skill-name"
-          value="{{skill.skill_name}}"
+          value="{{skill.skill-name}}"
         />
         {% if errors.skill-name %}
         <div class="notification is-danger">{{errors.skill-name|join}}</div>
@@ -22,7 +22,7 @@
           type="number"
           name="skill-level"
           id="skill-level"
-          value="{{skill.skill_level}}"
+          value="{{skill.skill-level}}"
         />
         <br />
         <label for="total-xp">Total XP: </label>
@@ -30,10 +30,13 @@
           type="number"
           name="total-xp"
           id="total-xp"
-          value="{{skill.total_xp}}"
+          value="{{skill.total-xp}}"
         />
         <br />
         <input type="submit" value="Submit" />
+        {% if errors.general %}
+        <div class="notification is-danger">{{errors.general|join}}</div>
+        {% endif %}
       </form>
       <br />
       <form action="/skill/delete" method="post">

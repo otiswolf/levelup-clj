@@ -6,8 +6,8 @@
       <ul class="skills">
         {% for skill in skills %}
         <li>
-          <p>Skill: {{skill.skill_name}}</p>
-          <p>Level: {{skill.skill_level}}</p>
+          <p>Skill: {{skill.skill-name}}</p>
+          <p>Level: {{skill.skill-level}}</p>
           <form action="/skill" method="get">
             <input type="hidden" name="id" value="{{skill.id}}" />
             <input type="submit" value="Details" />

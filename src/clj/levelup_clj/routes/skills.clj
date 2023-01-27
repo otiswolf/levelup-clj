@@ -3,14 +3,15 @@
    [levelup-clj.layout :as layout]
    [levelup-clj.db.core :as db]
    [levelup-clj.util.exception :as ex]
-   [clojure.java.io :as io]
    [levelup-clj.middleware :as middleware]
+   [camel-snake-kebab.core :as csk]
    [ring.util.response]
    [ring.util.http-response :as response]
    [struct.core :as st]))
 
 (defn get-skill [id] 
-   (db/get-skill {:id id}))
+   (-> (db/get-skill {:id id})
+       (update-keys csk/->kebab-case)))
 
 (defn edit-skill! [{:keys [params]}]
   (let [skill-name (get params :skill-name)
